@@ -1,5 +1,6 @@
 import os
 import re
+import random
 
 # todo: class Board:
 
@@ -21,12 +22,18 @@ def correct_col(col):
     if col == 2: return 10
 
 
-# todo: refactor
-def win(_board):
+def small_board(_board):
     board = [[],[],[]]
     for i in range(3):
         for j in range(3):
             board[i].append(_board[correct_row(i)][correct_col(j)])
+
+    return board
+
+
+# todo: refactor
+def win(board):
+    board = small_board(board)
 
     #rows
     if   board[0][0] == board[0][1] and board[0][0] == board[0][2] and board[0][0] != ' ':
@@ -53,6 +60,35 @@ def win(_board):
     else:
         return False
 
+
+def ai_move(board):
+    board = small_board(board)
+    cell = None
+    while cell != ' ':
+        row = random.randint(0, 2)
+        col = random.randint(0, 2)
+        cell = board[row] [col]
+        move = (correct_row(row), correct_col(col))
+    return move
+
+
+def human_move(board):
+    print(f'You\'re an X player. Make your move')
+    while True:
+        move = re.findall(r'[0-2]', input())
+        if len(move) == 2:
+            move = (correct_row(int(move[0])), correct_col(int(move[1])))
+            row = move[0]
+            col = move[1]
+
+            if board[row][col] == ' ':
+                board[row][col] = 'X'
+                return row, col
+            else:
+                print('This cell is occupied!')
+        else:
+            print('Invalid input!')
+
 def game():
     EMPTY_BOARD = [
     list('┌───┬───┬───┐'),
@@ -74,24 +110,17 @@ def game():
         if current_sym == 'X':
             current_sym = 'O'
         else:
-            current_sym = 'X'
-        print(f'You\'re an {current_sym} player. Make your move')
+            current_sym = 'X'        
 
-        while True:
-            move = re.findall(r'[0-2]', input())
-            if len(move) == 2:
-                move = (correct_row(int(move[0])), correct_col(int(move[1])))
-                row = move[0]
-                col = move[1]
+        if (current_sym == 'O'):
+            move = ai_move(board)
+        else:
+            move = human_move(board)
 
-                if board[row][col] == ' ':
-                    board[row][col] = current_sym
-                    break
-                else:
-                    print('This cell is occupied!')
-            else:
-                print('Invalid input!')
+        row = move[0]
+        col = move[1]
 
+        board[row][col] = current_sym
 
         print_board(board)
 
