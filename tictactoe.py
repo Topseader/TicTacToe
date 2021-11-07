@@ -73,7 +73,7 @@ def ai_move(board):
 
 
 def human_move(board):
-    print(f'You\'re an X player. Make your move')
+    print(f'You\'re an X player. Make your move:')
     while True:
         move = re.findall(r'[0-2]', input())
         if len(move) == 2:
@@ -131,5 +131,9 @@ def game():
     else:
         print('It\'s a tie!')
 
-
-game()
+again = 'y'
+while again == 'y':
+    game()
+    again = input('Try again?\n')
+else:
+    print('Goodbye!')
