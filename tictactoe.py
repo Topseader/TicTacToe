@@ -1,18 +1,8 @@
 import os
 import re
 
-EMPTY_BOARD = [
-list('┌───┬───┬───┐'),
-list('│   │   │   │'),
-list('├───┼───┼───┤'),
-list('│   │   │   │'),
-list('├───┼───┼───┤'),
-list('│   │   │   │'),
-list('└───┴───┴───┘')
-]
-
 # todo: class Board:
-       
+
 
 def print_board(board):
     os.system('clear')
@@ -63,7 +53,16 @@ def win(_board):
     else:
         return False
 
-def game():    
+def game():
+    EMPTY_BOARD = [
+    list('┌───┬───┬───┐'),
+    list('│   │   │   │'),
+    list('├───┼───┼───┤'),
+    list('│   │   │   │'),
+    list('├───┼───┼───┤'),
+    list('│   │   │   │'),
+    list('└───┴───┴───┘')
+]
     board = EMPTY_BOARD
     current_sym = 'O'
     moves_count = 0
