@@ -1,4 +1,5 @@
 import os
+import re
 
 EMPTY_BOARD = [
 list('┌───┬───┬───┐'),
@@ -29,13 +30,6 @@ def correct_col(col):
     if col == 1: return 6
     if col == 2: return 10
 
-
-def insert_on_board(board, row, col, sym): #pass corrected adresses
-    board[row][col] = sym
-    return board
-
-def cell_empty(row, col):
-    return board[row][col] == ' '
 
 # todo: refactor
 def win(_board):
@@ -71,37 +65,43 @@ def win(_board):
 
 def game():    
     board = EMPTY_BOARD
-    current_sym = '0'
+    current_sym = 'O'
+    moves_count = 0
     print_board(board)
-    print('Welcome!')
-    
+    print('Welcome!')    
 
     #Main game loop
-    while(not win(board)):
+    while ((not win(board)) and moves_count < 9):        
         if current_sym == 'X':
             current_sym = 'O'
         else:
             current_sym = 'X'
         print(f'You\'re an {current_sym} player. Make your move')
-        # todo: improve with re
-        move = input()
-        move = (correct_row(int(move[0])), correct_col(int(move[1])))
-        row = move[0]
-        col = move[1]
-        
-        if board[move[0]] [move[1]] == ' ':
-            board = insert_on_board(board, row, col, current_sym)        
+
+        while True:
+            move = re.findall(r'[0-2]', input())
+            if len(move) == 2:
+                move = (correct_row(int(move[0])), correct_col(int(move[1])))
+                row = move[0]
+                col = move[1]
+
+                if board[row][col] == ' ':
+                    board[row][col] = current_sym
+                    break
+                else:
+                    print('This cell is occupied!')
+            else:
+                print('Invalid input!')
+
 
         print_board(board)
 
-    print(f'The {current_sym} player won the game!')
+        moves_count += 1
+
+    if win(board):
+        print(f'The {current_sym} player won the game!')
+    else:
+        print('It\'s a tie!')
 
 
 game()
-
-'''
-print_board(insert_on_board(EMPTY_BOARD,
-                            correct_row(0), 
-                            correct_col(0), 
-                            'X'))
-'''
