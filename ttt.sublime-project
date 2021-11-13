@@ -2,15 +2,7 @@
 	"folders":
 	[
 		{
-			"path": ".",
+			"path": "."
 		}
-	],
-	"debugger_configurations":
-	[
-		{
-			"name": "Debug python",
-			"type": "python",
-			"request": "launch"
-		},
-	],
+	]
 }
