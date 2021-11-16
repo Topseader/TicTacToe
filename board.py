@@ -45,13 +45,6 @@ class Board:
             return False
 
 
-
-
-
-test = Board(4)
-test.get_move('x',2,1)
-test.print_board()
-
 '''
     EMPTY_BOARD = [list('┌───┬───┬───┐'),
                    list('│   │   │   │'),
