@@ -8,8 +8,11 @@ class HumanPlayer:
 
     def make_move(self):
         raw_str = input()
-        row = self.correct_row(raw_str[0])
-        col = int(raw_str[1])
+        try:
+            row = self.correct_row(raw_str[0])
+            col = int(raw_str[1])
+        except ValueError: # ???
+            self.make_move()
         return (self.sym, row, col)
 
 
