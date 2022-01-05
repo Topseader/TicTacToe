@@ -57,7 +57,7 @@ class Game:
             try:
                 self.board[row][col] != ' '
             except ValueError:
-                print('Totally invalid input!')      
+                print('Totally invalid input!')
                 continue
             except IndexError:
                 print('Invalid input!')
@@ -87,16 +87,14 @@ class Game:
         sym, row, col = self.last_move
         
         #rows
-        if all(elem == sym for elem in self.board[row]):
-            return True
+        for col_num in range(self.board_size - self.win_len):
+            if all(self.board[row][col_num + i] == sym for i in range(self.win_len)):
+                return True
 
         #columns
-        entire_col = []
-        for i in range(self.board_size):
-            entire_col.append(self.board[i][col])
-
-        if all(elem == sym for elem in entire_col):
-            return True
+        for row_num in range(self.board_size - self.win_len):
+            if all(self.board[row_num + i][col] == sym for i in range(self.win_len)):
+                return True
 
         return False
 
@@ -124,7 +122,7 @@ class Game:
 def main():
     pl_x = HumanPlayer('X')
     pl_o = HumanPlayer('O')
-    game = Game(pl_x, pl_o, 'X', 6)
+    game = Game(pl_x, pl_o, 'X', 10)
     game.play()
 
 
