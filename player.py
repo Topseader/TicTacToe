@@ -6,11 +6,11 @@ class HumanPlayer:
         self.ai = False
 
 
-    def make_move(self):
+    def make_move(self): # TODO: reverse row/col && col_num > 1
         raw_str = input()
         try:
             row = self.correct_row(raw_str[0])
-            col = int(raw_str[1])
+            col = int(raw_str[1:3])
         except ValueError: # ???
             self.make_move()
         return (self.sym, row, col)
