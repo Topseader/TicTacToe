@@ -115,18 +115,17 @@ class Game:
         offset = 0
 
         #above the middle lane 
-        if row + col <= self.board_size - 1:            
+        if row + col <= self.board_size - 1:
             while row + col - offset >= self.win_len - 1:
                 if all(self.board[i+offset][row+col-i-offset] == sym for i in range(self.win_len)):
                     return True
                 offset += 1
 
         #below the middle lane
-        # NOT DONE!
         else:            
-            while row + col + offset <= self.board_size*2 - self.win_len:
-                print(all(self.board[row+col-1-self.board_size+i+offset][self.board_size-1-i-offset] == sym for i in range(self.win_len)))
-                if all(self.board[row+col-1-self.board_size+i+offset][self.board_size-1-i-offset] == sym for i in range(self.win_len)):
+            while row + col + offset < self.board_size*2 - self.win_len:
+                print(f'offset: {offset}row:{row+col+1-self.board_size+offset} col:{self.board_size-1-offset}')
+                if all(self.board[row+col+1-self.board_size+i+offset][self.board_size-1-i-offset] == sym for i in range(self.win_len)):
                     return True
                 offset += 1
         
@@ -144,7 +143,7 @@ class Game:
             if self.is_win():
                 print('X player is win')
                 break
-                
+
             print('O player\'s turn')
             self.get_move(self.player_o)
             self.print_board(self.board)
