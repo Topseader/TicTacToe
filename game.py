@@ -4,7 +4,7 @@ import platform
 from player import HumanPlayer
 
 class Game:
-    def __init__(self, player_x, player_o, sym=' X ', board_size=3):
+    def __init__(self, player_x, player_o, sym, board_size):
         self.player_x = player_x
         self.player_o = player_o
         self.sym = sym
@@ -128,7 +128,6 @@ class Game:
         #below the middle lane
         else:            
             while row + col + offset < self.board_size*2 - self.win_len:
-                print(f'offset: {offset}row:{row+col+1-self.board_size+offset} col:{self.board_size-1-offset}')
                 if all(self.board[row+col+1-self.board_size+i+offset][self.board_size-1-i-offset] == sym for i in range(self.win_len)):
                     return True
                 offset += 1
