@@ -1,5 +1,6 @@
 import os
 import string
+import platform
 from player import HumanPlayer
 
 class Game:
@@ -19,7 +20,10 @@ class Game:
 
     #TODO: Printer class
     def print_board(self, lst):
-        os.system('clear')
+        if platform.system() == 'Windows':
+            os.system('cls')
+        else:
+            os.system('clear')
         big_board = [None] * (self.board_size * 2)
         big_board[0] = '┌' + '───┬' * (self.board_size-1) + '───┐'
 
