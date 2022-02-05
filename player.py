@@ -6,7 +6,7 @@ class HumanPlayer:
         self.ai = False
 
 
-    def make_move(self): # TODO: reverse row/col && col_num > 1
+    def make_move(self):
         raw_str = input()
         try:
             row = self.correct_row(raw_str[0])

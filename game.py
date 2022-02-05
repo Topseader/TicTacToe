@@ -1,10 +1,8 @@
-import os
-import string
-import platform
+from printer import ConsolePrinter 
 from player import HumanPlayer
 
 class Game:
-    def __init__(self, player_x, player_o, sym, board_size):
+    def __init__(self, player_x, player_o, sym, board_size, printer):
         self.player_x = player_x
         self.player_o = player_o
         self.sym = sym
@@ -17,53 +15,7 @@ class Game:
             self.win_len = 5
 
         self.board = [['   ' for _ in range(board_size)]for _ in range(board_size)]
-
-    #TODO: Printer class
-    def print_board(self, lst):
-        if platform.system() == 'Windows':
-            os.system('cls')
-        else:
-            os.system('clear')
-        big_board = [None] * ((self.board_size * 2) + 1)
-
-
-        big_board[0] = ['    ']
-        for i in range(self.board_size):
-            if i < 10:
-                big_board[0].append(str(i) + '   ')
-            else:
-                big_board[0].append(str(i) + '  ')
-
-        big_board[0] = ''.join(big_board[0])
-        big_board[1] = '  ┌' + '───┬' * (self.board_size-1) + '───┐'
-
-        chars_list = list(string.ascii_uppercase[:self.board_size])
-
-        for indx in range(2,len(big_board)):
-            if indx % 2 != 0:
-                big_board[indx] = '  ├' + '───┼' * (self.board_size-1) + '───┤'
-            else:
-                big_board[indx] = str(chars_list[indx//2-1]) + ' │'
-                for i in range(self.board_size):
-                    big_board[indx] += lst[indx//2-1][i] + '│'
-
-        big_board.append('  └' + '───┴' * (self.board_size-1) + '───┘')
-
-        for i in big_board:
-            print(i)
-
-
-    def help(self):
-        chars_list = list(string.ascii_uppercase[:self.board_size])
-        help_board = [[' ' for _ in range(self.board_size)]for _ in range(self.board_size)]
-        for row_num, row in enumerate(help_board):
-            for col_num, el in enumerate(row):
-                if col_num < 10:
-                    help_board[row_num][col_num] = f'{chars_list[row_num]}{col_num} '
-                else:
-                    help_board[row_num][col_num] = f'{chars_list[row_num]}{col_num}'
-
-        self.print_board(help_board)
+        self.printer = printer
 
     def check_move(self, player):
         while True:
@@ -78,7 +30,6 @@ class Game:
             except IndexError:
                 print('Invalid input!')
                 continue
-
 
             if self.board[row][col] != '   ':
                 print('Cell is occupied!')
@@ -148,20 +99,18 @@ class Game:
         return False
 
 
-
-
     def play(self):
-        self.help()
+        self.printer.help()
         for n_turns in range(self.board_size ** 2):
             self.get_move(self.player_x)
-            self.print_board(self.board)
+            self.printer.print_board(self.board)
             if self.is_win():
                 print('X player is win')
                 break
 
             print('O player\'s turn')
             self.get_move(self.player_o)
-            self.print_board(self.board)
+            self.printer.print_board(self.board)
             if self.is_win():
                 print('O player is win')
                 break
@@ -169,25 +118,14 @@ class Game:
 
 
 def main():
+    BOARD_SIZE = 13
     pl_x = HumanPlayer(' X ')
     pl_o = HumanPlayer(' O ')
-    game = Game(pl_x, pl_o, ' X ', 13)
+    console_print = ConsolePrinter(BOARD_SIZE)
+    game = Game(pl_x, pl_o, ' X ', BOARD_SIZE, console_print)
     game.play()
-
-
 
 
 if __name__ == '__main__':
     main()
 
-'''
-    EMPTY_BOARD = [list('┌───┬───┬───┐'),
-                   list('│   │   │   │'),
-                   list('├───┼───┼───┤'),
-                   list('│   │   │   │'),
-                   list('├───┼───┼───┤'),
-                   list('│   │   │   │'),
-                   list('└───┴───┴───┘')
-                  
-                  ]
-''' 
