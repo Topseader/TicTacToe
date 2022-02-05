@@ -27,7 +27,7 @@ class Game:
         big_board = [None] * ((self.board_size * 2) + 1)
 
 
-        big_board[0] = ['  ']
+        big_board[0] = ['    ']
         for i in range(self.board_size):
             if i < 10:
                 big_board[0].append(str(i) + '   ')
@@ -35,18 +35,19 @@ class Game:
                 big_board[0].append(str(i) + '  ')
 
         big_board[0] = ''.join(big_board[0])
+        big_board[1] = '  ┌' + '───┬' * (self.board_size-1) + '───┐'
 
-        big_board[1] = '┌' + '───┬' * (self.board_size-1) + '───┐'
+        chars_list = list(string.ascii_uppercase[:self.board_size])
 
         for indx in range(2,len(big_board)):
             if indx % 2 != 0:
-                big_board[indx] = '├' + '───┼' * (self.board_size-1) + '───┤'
+                big_board[indx] = '  ├' + '───┼' * (self.board_size-1) + '───┤'
             else:
-                big_board[indx] = '│'
+                big_board[indx] = str(chars_list[indx//2-1]) + ' │'
                 for i in range(self.board_size):
                     big_board[indx] += lst[indx//2-1][i] + '│'
 
-        big_board.append('└' + '───┴' * (self.board_size-1) + '───┘')
+        big_board.append('  └' + '───┴' * (self.board_size-1) + '───┘')
 
         for i in big_board:
             print(i)
