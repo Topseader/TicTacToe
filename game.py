@@ -24,16 +24,27 @@ class Game:
             os.system('cls')
         else:
             os.system('clear')
-        big_board = [None] * (self.board_size * 2)
-        big_board[0] = '┌' + '───┬' * (self.board_size-1) + '───┐'
+        big_board = [None] * ((self.board_size * 2) + 1)
 
-        for indx in range(1,len(big_board)):
-            if indx % 2 == 0:
+
+        big_board[0] = ['  ']
+        for i in range(self.board_size):
+            if i < 10:
+                big_board[0].append(str(i) + '   ')
+            else:
+                big_board[0].append(str(i) + '  ')
+
+        big_board[0] = ''.join(big_board[0])
+
+        big_board[1] = '┌' + '───┬' * (self.board_size-1) + '───┐'
+
+        for indx in range(2,len(big_board)):
+            if indx % 2 != 0:
                 big_board[indx] = '├' + '───┼' * (self.board_size-1) + '───┤'
             else:
                 big_board[indx] = '│'
                 for i in range(self.board_size):
-                    big_board[indx] += lst[indx//2][i] + '│'
+                    big_board[indx] += lst[indx//2-1][i] + '│'
 
         big_board.append('└' + '───┴' * (self.board_size-1) + '───┘')
 
