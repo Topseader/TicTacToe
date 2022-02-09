@@ -18,17 +18,16 @@ class Game:
         self.printer = printer
 
     def check_move(self, player):
-        while True:
-            sym, row, col = player.make_move()
-            self.last_move = sym, row, col
-            
+        while True:            
             try:
+                sym, row, col = player.make_move()
+                self.last_move = sym, row, col
                 self.board[row][col] != '   '
-            except ValueError:
-                print('Totally invalid input!')
+            except UnboundLocalError:
+                print('Invalid input! Row or column number is out of range.')
                 continue
             except IndexError:
-                print('Invalid input!')
+                print('Invalid input! Row or column number is out of range.')
                 continue
 
             if self.board[row][col] != '   ':

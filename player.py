@@ -8,11 +8,16 @@ class HumanPlayer:
 
     def make_move(self):
         raw_str = input()
+        if raw_str[0] in list('0123456789'):
+            print('Invalid input! Use letters to determine targeted row.')
+            self.make_move()
         try:
             row = self.correct_row(raw_str[0])
             col = int(raw_str[1:3])
-        except ValueError: # ???
+        except ValueError:
+            print('Invalid input!')
             self.make_move()
+
         return (self.sym, row, col)
 
 
