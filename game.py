@@ -17,6 +17,7 @@ class Game:
         self.board = [['   ' for _ in range(board_size)]for _ in range(board_size)]
         self.printer = printer
 
+
     def check_move(self, player):
         while True:            
             try:
@@ -40,10 +41,7 @@ class Game:
 
 
     def get_move(self, player):
-        if player.ai == False:
-            if self.check_move(player):
-                sym, row, col = self.last_move
-        else:
+        if self.check_move(player):
             sym, row, col = self.last_move
         
         self.board[row][col] = sym
@@ -54,44 +52,52 @@ class Game:
         
         #rows
         for col_num in range(self.board_size - self.win_len):
-            if all(self.board[row][col_num + i] == sym for i in range(self.win_len)):
-                return True
+            if all(self.board[row][col_num + i] == sym 
+                    for i in range(self.win_len)):
+                        return True
 
         #columns
         for row_num in range(self.board_size - self.win_len):
-            if all(self.board[row_num + i][col] == sym for i in range(self.win_len)):
+            if all(self.board[row_num + i][col] == sym 
+                    for i in range(self.win_len)):
                 return True
 
         #diagonals
         offset = 0
 
         #top-left to bottom-right
-        if row <= col:            
+        #above the middle
+        if row <= col:
             while col - row + self.win_len + offset - 1 <= self.board_size:
-                if all(self.board[i+offset][col-row+i+offset] == sym for i in range(self.win_len)):
-                    return True
+                if all(self.board[i+offset][col-row+i+offset] == sym 
+                    for i in range(self.win_len)):
+                        return True
                 offset += 1
+        #below the middle
         else:
             while row - col + self.win_len + offset - 1 <= self.board_size:
-                if all(self.board[row-col+i+offset][i+offset] == sym for i in range(self.win_len)):
-                    return True
+                if all(self.board[row-col+i+offset][i+offset] == sym 
+                    for i in range(self.win_len)):
+                        return True
                 offset += 1
 
         #top-right to bottom-left
         offset = 0
 
-        #above the middle lane 
+        #above the middle
         if row + col <= self.board_size - 1:
             while row + col - offset >= self.win_len - 1:
-                if all(self.board[i+offset][row+col-i-offset] == sym for i in range(self.win_len)):
-                    return True
+                if all(self.board[i+offset][row+col-i-offset] == sym 
+                    for i in range(self.win_len)):
+                        return True
                 offset += 1
-
-        #below the middle lane
+        #below the middle
         else:            
             while row + col + offset < self.board_size*2 - self.win_len:
-                if all(self.board[row+col+1-self.board_size+i+offset][self.board_size-1-i-offset] == sym for i in range(self.win_len)):
-                    return True
+                if all(self.board[row+col+1-self.board_size+i+offset]
+                    [self.board_size-1-i-offset] == sym 
+                    for i in range(self.win_len)):
+                        return True
                 offset += 1
         
         
@@ -127,4 +133,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

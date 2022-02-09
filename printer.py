@@ -10,6 +10,7 @@ class ConsolePrinter:
         else:
             self.clear = 'clear'
 
+
     def print_board(self, lst):
         os.system(self.clear)
 
@@ -40,11 +41,12 @@ class ConsolePrinter:
         for i in big_board:
             print(i)
 
+
     def help(self):
         chars_list = list(string.ascii_uppercase[:self.board_size])
         help_board = [[' ' for _ in range(self.board_size)]for _ in range(self.board_size)]
-        for row_num, row in enumerate(help_board):
-            for col_num, el in enumerate(row):
+        for row_num in range(self.board_size):
+            for col_num in range(self.board_size):
                 if col_num < 10:
                     help_board[row_num][col_num] = f'{chars_list[row_num]}{col_num} '
                 else:
