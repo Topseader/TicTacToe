@@ -2,7 +2,7 @@
 
 - The ultimate version of very famious game!
 - Finally working on Lunux, Windows and probably on MacOS!
-- Doens't have AI opponents yet!
+- Doesn't have AI opponents yet!
 
 
 ## WHAT IS IT?
